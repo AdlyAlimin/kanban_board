@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Dashboard\DashbordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', function () {
+        return view('login');
+    })->name('login');
+
+    Route::get('auth/google', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
+    Route::get('auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [DashbordController::class, 'index'])->name('home');
 });

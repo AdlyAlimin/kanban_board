@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\Auth\GoogleInterface;
+use App\Repositories\Auth\GoogleRepository;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -26,5 +28,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+    }
+
+    public function register()
+    {
+        $this->app->bind(
+            GoogleInterface::class,
+            GoogleRepository::class
+        );
     }
 }
