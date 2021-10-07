@@ -12,6 +12,8 @@ php artisan migrate --seed
 npm install
 
 npm run dev
+
+php artisan serve --host=localhost
 ```
 
 Thank you.
