@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/', function () {
-        return view('login');
+        return view('auth.login');
     })->name('login');
 
     Route::get('auth/google', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
@@ -26,4 +26,8 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashbordController::class, 'index'])->name('home');
+
+    Route::auto('/task', Kanban\TaskController::class);
+
+    Route::auto('/status', Kanban\StatusController::class);
 });
