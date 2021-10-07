@@ -1,115 +1,175 @@
 <template>
-  <!-- <div class="relative p-2 flex overflow-x-auto h-full"> -->
+    <!-- <div class="relative p-2 flex overflow-x-auto h-full"> -->
 
-  <div class="row">
-    <!-- Columns (Statuses) -->
+    <div class="row">
+        <!-- Columns (Statuses) -->
 
-    <!--begin::Col-->
-    <div v-for="status in statuses" :key="status.slug" class="col">
-      <!--begin::Card-->
-      <div class="card card-bordered mb-10">
-        <!--begin::Card header-->
-        <div class="card-header">
-          <div class="card-title align-items-start flex-column">
-            <h3 class="card-label">{{ status.title }}</h3>
-          </div>
-          <div class="card-toolbar">
-            <button class="btn btn-sm btn-primary">Add Task</button>
-          </div>
-        </div>
-        <!--end::Card header-->
-
-        <!--begin::Card body-->
-        <div class="card-body">
-          <!--begin::Row-->
-          <div class="row row-cols-1 g-10 draggable-zone">
-            <div
-              v-for="task in status.tasks"
-              :key="task.id"
-              class="col draggable"
-            >
-              <!--begin::Card-->
-              <div class="card bg-light-primary">
+        <!--begin::Col-->
+        <div v-for="status in statuses" :key="status.slug" class="col">
+            <!--begin::Card-->
+            <div class="card card-bordered mb-10">
+                <!--begin::Card header-->
                 <div class="card-header">
-                  <div class="card-title">
-                    <h3 class="card-label">{{ task.title }}</h3>
-                  </div>
-                  <div class="card-toolbar">
-                    <a
-                      href="#"
-                      class="
-                        btn btn-icon btn-hover-light-primary
-                        draggable-handle
-                      "
-                    >
-                      <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
-                      <span class="svg-icon svg-icon-2x">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
+                    <div class="card-title align-items-start flex-column">
+                        <h3 class="card-label">{{ status.title }}</h3>
+                    </div>
+                    <div class="card-toolbar">
+                        <button
+                            class="btn btn-sm btn-primary"
+                            @click="openAddTaskForm(status.id)"
                         >
-                          <path
-                            d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z"
-                            fill="black"
-                          ></path>
-                          <path
-                            opacity="0.3"
-                            d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z"
-                            fill="black"
-                          ></path>
-                        </svg>
-                      </span>
-                      <!--end::Svg Icon-->
-                    </a>
-                  </div>
+                            Add Task
+                        </button>
+                    </div>
                 </div>
+                <!--end::Card header-->
+
+                <!--begin::Card body-->
                 <div class="card-body">
-                  {{ task.description }}
-                </div>
-              </div>
-              <!--end::Card-->
-            </div>
+                    <!--begin::Row-->
+                    <div class="row row-cols-1 g-10-zone">
+                        <!-- New Task -->
+                        <AddTaskForm
+                            v-if="newTaskForStatus === status.id"
+                            :status-id="status.id"
+                            v-on:task-added="handleTaskAdded"
+                            v-on:task-canceled="closeAddTaskForm"
+                        />
+                        <!-- New Task -->
 
-            <div v-show="!status.tasks.length" class="col draggable">
-              <!--begin::Card-->
-              <div class="card bg-light-primary">
-                <div class="card-header">
-                  <div class="card-title align-items-center">
-                    <h3 class="card-label">No Task</h3>
-                  </div>
+                        <!-- Tasks -->
+
+                        <draggable
+                            class="flex-1 overflow-hidden "
+                            v-model="status.tasks"
+                            v-bind="taskDragOptions"
+                            @end="handleTaskMoved"
+                        >
+                            <transition-group
+                                class="flex-1 flex flex-col h-full overflow-x-hidden overflow-y-auto rounded mb-5"
+                                tag="div"
+                            >
+                                <div
+                                    v-for="task in status.tasks"
+                                    :key="task.id"
+                                    class="col draggable"
+                                >
+                                    <!--begin::Card-->
+                                    <div class="card bg-light-primary">
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h3 class="card-label">
+                                                    {{ task.title }}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            {{ task.description }}
+                                        </div>
+                                    </div>
+                                    <!--end::Card-->
+                                </div>
+                                <!-- Tasks -->
+                            </transition-group>
+                        </draggable>
+
+                        <!-- No Tasks -->
+                        <div
+                            v-show="
+                                !status.tasks.length &&
+                                    newTaskForStatus !== status.id
+                            "
+                            class="col"
+                        >
+                            <!--begin::Card-->
+                            <div class="card bg-light-primary">
+                                <div class="card-header">
+                                    <div class="card-title align-items-center">
+                                        <h3 class="card-label">No Task</h3>
+                                    </div>
+                                </div>
+                                <!-- <div class="card-body">
+                                   
+                                </div> -->
+                            </div>
+                            <!--end::Card-->
+                        </div>
+                        <!-- No Tasks -->
+                    </div>
+                    <!--end::Row-->
                 </div>
-              </div>
-              <!--end::Card-->
+                <!--end::Card body-->
             </div>
-          </div>
-          <!--end::Row-->
+            <!--end::Card-->
         </div>
-        <!--end::Card body-->
-      </div>
-      <!--end::Card-->
-    </div>
-    <!--end::Col-->
+        <!--end::Col-->
 
-    <!-- ./Columns -->
-  </div>
+        <!-- ./Columns -->
+    </div>
 </template>
 
 <script>
+import AddTaskForm from "./AddTaskForm";
+import draggable from "vuedraggable";
+
 export default {
-  props: {
-    initialData: Array,
-  },
-  data() {
-    return {
-      statuses: [],
-    };
-  },
-  mounted() {
-    // 'clone' the statuses so we don't alter the prop when making changes
-    this.statuses = JSON.parse(JSON.stringify(this.initialData));
-  },
+    components: { draggable,AddTaskForm },
+    props: {
+        initialData: Array
+    },
+    data() {
+        return {
+            statuses: [],
+            newTaskForStatus: 0 // track the ID of the status we want to add to
+        };
+    },
+    mounted() {
+        // 'clone' the statuses so we don't alter the prop when making changes
+        this.statuses = JSON.parse(JSON.stringify(this.initialData));
+    },
+    computed: {
+        taskDragOptions() {
+            return {
+                animation: 200,
+                group: "task-list",
+                dragClass: "status-drag"
+            };
+        }
+    },
+    methods: {
+        // set the statusId and trigger the form to show
+        openAddTaskForm(statusId) {
+            this.newTaskForStatus = statusId;
+        },
+        // reset the statusId and close form
+        closeAddTaskForm() {
+            this.newTaskForStatus = 0;
+        },
+        // add a task to the correct column in our list
+        handleTaskAdded(newTask) {
+            // Find the index of the status where we should add the task
+            const statusIndex = this.statuses.findIndex(
+                status => status.id === newTask.status_id
+            );
+
+            // Add newly created task to our column
+            this.statuses[statusIndex].tasks.push(newTask);
+
+            // Reset and close the AddTaskForm
+            this.closeAddTaskForm();
+        },
+        handleTaskMoved() {
+            // Send the entire list of statuses to the server
+            axios.put("/task/sync", { columns: this.statuses }).catch(err => {
+                console.log(err.response);
+            });
+        }
+    }
 };
 </script>
+<style scoped>
+.status-drag {
+    transition: transform 0.5s;
+    transition-property: all;
+}
+</style>

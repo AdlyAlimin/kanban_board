@@ -2,8 +2,10 @@
 
 namespace App\Models\Kanban;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Kanban\Task;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Status extends Model
 {
