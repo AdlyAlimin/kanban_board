@@ -31,3 +31,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::auto('/status', Kanban\StatusController::class);
 });
+
+Route::auto('/auth', Auth\AuthController::class);

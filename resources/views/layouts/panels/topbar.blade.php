@@ -1,7 +1,7 @@
 <div class="d-flex align-items-stretch flex-shrink-0">
     <!--begin::Toolbar wrapper-->
     <div class="d-flex align-items-stretch flex-shrink-0">
-       
+
         <!--begin::User-->
         <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
             <!--begin::Menu wrapper-->
@@ -40,11 +40,11 @@
                 <!--end::Menu item-->
                 <!--begin::Menu item-->
                 <div class="menu-item px-5">
-                    {{-- <a href="{{ route('auth.getLogout') }}" class="menu-link px-5">Sign
-                        Out</a> --}}
+                    <a href="{{ route('auth.getLogout') }}" class="menu-link px-5">Sign
+                        Out</a>
                 </div>
                 <!--end::Menu item-->
-               
+
             </div>
             <!--end::Menu-->
             <!--end::Menu wrapper-->
