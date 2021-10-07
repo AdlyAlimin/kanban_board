@@ -16,6 +16,11 @@ npm run dev
 php artisan serve --host=localhost
 ```
 
+Admin Access
+
+email : admin@admin.com
+password : admin@1234
+
 Thank you.
 
 Reference :
