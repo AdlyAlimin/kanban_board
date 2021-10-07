@@ -47,6 +47,12 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
+        'authlog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/auth.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
         'googleauthlog' => [
             'driver' => 'single',
             'path' => storage_path('logs/google_auth.log'),
@@ -56,6 +62,24 @@ return [
         'tasklog' => [
             'driver' => 'single',
             'path' => storage_path('logs/task.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        'rolelog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/role.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        'permissionlog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/permission.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        'userlog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/user.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 

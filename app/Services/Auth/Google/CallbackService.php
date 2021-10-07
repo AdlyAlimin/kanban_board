@@ -30,6 +30,8 @@ class CallbackService
                     'password' => encrypt('password')
                 ]);
 
+                $newUser->assignRole('Staff');
+
                 Auth::login($newUser);
 
                 return true;

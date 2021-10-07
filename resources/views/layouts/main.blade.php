@@ -31,7 +31,8 @@
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
                     <a href="/">
-                        <img alt="Logo" src="{{ asset('assets/media/logos/todak_logo_black.png') }}" class="h-25px logo" />
+                        <img alt="Logo" src="{{ asset('assets/media/logos/todak_logo_black.png') }}"
+                            class="h-25px logo" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Aside toggler-->
@@ -89,7 +90,8 @@
                                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_header_nav'}"
                                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                                     <!--begin::Title-->
-                                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{ Str::ucfirst(Request::segment(1)) }}</h1>
+                                    <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">
+                                        {{ Str::ucfirst(Request::segment(1)) }}</h1>
                                     <!--end::Title-->
                                     <!--begin::Separator-->
                                     {{-- <span class="h-20px border-gray-200 border-start mx-4"></span> --}}
@@ -167,6 +169,13 @@
     <!--end::Main-->
     <!--begin::Javascript-->
     @include('layouts.panels.script')
+    <script>
+        @auth
+          window.Permissions = {!! json_encode(Auth::user()->allPermissions, true) !!};
+        @else
+          window.Permissions = [];
+        @endauth
+    </script>
     <!--end::Javascript-->
 </body>
 <!--end::Body-->

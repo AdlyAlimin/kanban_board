@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -178,6 +179,7 @@ return [
          * Custom Service Providers...
          */
         App\Providers\KanbanServiceProvider::class,
+        App\Providers\UserServiceProvider::class,
 
     ],
 

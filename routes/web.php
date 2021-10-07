@@ -30,6 +30,11 @@ Route::middleware(['auth'])->group(function () {
     Route::auto('/task', Kanban\TaskController::class);
 
     Route::auto('/status', Kanban\StatusController::class);
+
+    Route::prefix('user')->group(function () {
+        
+        Route::auto('/role', User\RoleController::class);
+    });
 });
 
 Route::auto('/auth', Auth\AuthController::class);

@@ -13,7 +13,7 @@
                     <div class="card-title align-items-start flex-column">
                         <h3 class="card-label">{{ status.title }}</h3>
                     </div>
-                    <div class="card-toolbar">
+                    <div v-if="$can('create task')" class="card-toolbar">
                         <button
                             class="btn btn-sm btn-primary"
                             @click="openAddTaskForm(status.id)"
